@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.willian.ourofino"
-        minSdk = 35
+        minSdk = 33
         targetSdk = 35
         versionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt() + 10
         versionName = "2.0.${System.getenv("GITHUB_RUN_NUMBER") ?: "0"}"
