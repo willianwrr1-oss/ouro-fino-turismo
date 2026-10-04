@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ouro Fino Tourism</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_history">History</string>
+    <string name="nav_attractions">Attractions</string>
+    <string name="nav_map">Map</string>
+    <string name="nav_about">About</string>
+
+    <!-- Home -->
+    <string name="home_welcome">Welcome to Ouro Fino</string>
+    <string name="home_description">Discover the history and beauty of the city of "Menino da Porteira"</string>
+    <string name="home_population">Population: 33,791 inhabitants</string>
+    <string name="home_elevation">Elevation: 908m</string>
+    <string name="home_region">Region: South of Minas Gerais</string>
+
+    <!-- History -->
+    <string name="history_title">History of Ouro Fino</string>
+    <string name="history_discovery">Gold Discovery</string>
+    <string name="history_founding">Settlement Foundation</string>
+    <string name="history_gold_cycle">The Gold Cycle</string>
+    <string name="history_modernization">Modern Transformation</string>
+
+    <!-- Attractions -->
+    <string name="attractions_title">Tourist Attractions</string>
+    <string name="attractions_cultural">Cultural</string>
+    <string name="attractions_natural">Natural</string>
+    <string name="attractions_religious">Religious</string>
+
+    <!-- Specific Attractions -->
+    <string name="menino_porteira">Boy of the Gate Monument</string>
+    <string name="menino_porteira_desc">Iconic monument 10 meters high, inaugurated in 2001. It represents the famous song by Teddy Vieira and Luís Raimundo from 1955, which immortalized a boy on the Ouro Fino Road.</string>
+    
+    <string name="boi_sem_coracao">Heartless Bull Monument</string>
+    <string name="boi_sem_coracao_desc">Sculpture referencing the "Boy of the Gate" song, representing the tragic event narrated in the song that marked the region.</string>
+    
+    <string name="santuario">Sanctuary of Saint Francis of Paula and Our Lady of Fatima</string>
+    <string name="santuario_desc">Main Church with stunning architecture and gold details, reflecting the religious and historical importance of the city. One of the oldest parishes in Minas Gerais.</string>
+    
+    <string name="tabuao">Tabuão Waterfall</string>
+    <string name="tabuao_desc">Waterfall of incomparable natural beauty with dark waters and several water drops. Ideal for swimming and nature contemplation.</string>
+    
+    <string name="pavilhao_malhas">Textile Pavilion</string>
+    <string name="pavilhao_malhas_desc">Commercial center representing the economic importance of the textile industry in Ouro Fino, part of the Textile Circuit of South Minas.</string>
+    
+    <string name="praca_berrante">Berrante Square</string>
+    <string name="praca_berrante_desc">Public space celebrating the sertanejo tradition of the region, with references to the berrante (traditional musical instrument of cattle herders).</string>
+    
+    <string name="pedra_itaguacu">Itaguaçu Stone</string>
+    <string name="pedra_itaguacu_desc">Natural rock formation amidst the mountainous landscape, offering panoramic views of the region.</string>
+    
+    <string name="lagos_palomos">Palomos Lakes</string>
+    <string name="lagos_palomos_desc">Bodies of water forming a tranquil and bucolic scenery, perfect for relaxing walks in contact with nature.</string>
+    
+    <string name="cafe_com_leite">Coffee with Milk House</string>
+    <string name="cafe_com_leite_desc">Historic residence where the "Coffee with Milk Agreement" was signed in 1913, an important political treaty of the Old Republic, establishing the presidency rotation between Minas Gerais and São Paulo.</string>
+    
+    <string name="estatua_luiz_gonzaga">Luiz Gonzaga Statue</string>
+    <string name="estatua_luiz_gonzaga_desc">Tribute to the famous northeastern musician, reflecting the cultural and musical sertanejo influence in the region.</string>
+    
+    <string name="cine_matilde">Matilde Isabel de Almeida Paiva Cinema</string>
+    <string name="cine_matilde_desc">Historic theater that preserves the cultural memory of the city, important space for performances and cultural events.</string>
+    
+    <string name="santo_cruzeiro">Holy Cross</string>
+    <string name="santo_cruzeiro_desc">Religious monument and landmark in the city, symbol of Christian faith and spiritual tradition of Ouro Fino.</string>
+    
+    <string name="bateador">Gold Panner Monument</string>
+    <string name="bateador_desc">Sculpture representing the traditional craft of gold mining, reminding of the economic legacy that shaped the city during the Gold Cycle.</string>
+    
+    <string name="jardim_municipal">Municipal Garden</string>
+    <string name="jardim_municipal_desc">Well-maintained green space that offers a pleasant environment for walks, rest and contemplation of local flora.</string>
+
+    <!-- History Content -->
+    <string name="history_discovery_text">During the late 17th century, Paulista bandeirantes explored the mountains of Minas Gerais in search of precious metals. Between 1693 and 1695, simultaneous gold discoveries marked different regions, including the Rio das Velhas and areas that would become the Ouro Fino region. These gold deposits sparked great interest from the Portuguese Crown and attracted thousands of people seeking wealth.</string>
+    
+    <string name="history_founding_text">The Ouro Fino Settlement was officially founded by Guard-major Francisco Martins Lustosa, a Portuguese figure who built the Chapel of Saint Francis of Paula on the site. Initially, the region became the subject of dispute between the Captaincies of São Paulo and Minas Gerais due to the riches found there. It was only in September 1708 that jurisdiction was definitively assigned to Minas Gerais, by order of King João V, following a request from the regent of Minas, Gomes Freire de Andrade.</string>
+    
+    <string name="history_gold_cycle_text">During the 18th century, Ouro Fino was part of the great economic movement of the Gold Cycle in Minas Gerais. Mining, especially through bateia and canaleta techniques, was the main activity. Portugal imposed heavy taxes, such as the "Fifth" (20% of all extracted gold) and the "Derrama" (complement to reach 1,500 kilos annually to the Crown). Despite initial wealth, gold gradually depleted throughout the century, altering the regional economy.</string>
+    
+    <string name="history_modernization_text">The transition from the 19th to the 20th century marked the transformation of Ouro Fino. The city evolved from a small mining settlement to a municipality with diversified activities. The textile industry gained increasing importance, consolidating Ouro Fino as part of the Textile Circuit of South Minas. The song "Boy of the Gate" (1955) elevated the city to national awareness, making it a symbol of Mineiro sertanejo culture. Currently, Ouro Fino balances its historical heritage with sustainable development and cultural tourism.</string>
+
+    <!-- About -->
+    <string name="about_title">About the App</string>
+    <string name="about_description">Application developed to showcase the historical and cultural richness of Ouro Fino, Minas Gerais. It includes information about monuments, natural attractions and map integration to facilitate tourist visits.</string>
+    <string name="about_version">Version 1.0.0</string>
+    <string name="about_developer">Developed for Ouro Fino City Hall - MG</string>
+
+    <!-- Common -->
+    <string name="distance">Distance: %1$.2f km</string>
+    <string name="coordinates">Coordinates: %1$.4f, %2$.4f</string>
+    <string name="open_map">Open in Map</string>
+    <string name="share">Share</string>
+    <string name="back">Back</string>
+    <string name="loading">Loading...</string>
+    <string name="error">Error loading</string>
+</resources>

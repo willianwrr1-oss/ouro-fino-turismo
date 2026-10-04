@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ouro Fino Turismo</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Início</string>
+    <string name="nav_history">História</string>
+    <string name="nav_attractions">Atrações</string>
+    <string name="nav_map">Mapa</string>
+    <string name="nav_about">Sobre</string>
+
+    <!-- Home -->
+    <string name="home_welcome">Bem-vindo a Ouro Fino</string>
+    <string name="home_description">Descubra a história e beleza da cidade mineira do Menino da Porteira</string>
+    <string name="home_population">População: 33.791 habitantes</string>
+    <string name="home_elevation">Altitude: 908m</string>
+    <string name="home_region">Região: Sul de Minas Gerais</string>
+
+    <!-- History -->
+    <string name="history_title">História de Ouro Fino</string>
+    <string name="history_discovery">Descoberta do Ouro</string>
+    <string name="history_founding">Fundação do Arraial</string>
+    <string name="history_gold_cycle">O Ciclo do Ouro</string>
+    <string name="history_modernization">Transformação Moderna</string>
+
+    <!-- Attractions -->
+    <string name="attractions_title">Pontos Turísticos</string>
+    <string name="attractions_cultural">Culturais</string>
+    <string name="attractions_natural">Naturais</string>
+    <string name="attractions_religious">Religiosos</string>
+
+    <!-- Specific Attractions -->
+    <string name="menino_porteira">Monumento Menino da Porteira</string>
+    <string name="menino_porteira_desc">Monumento icônico com 10 metros de altura, inaugurado em 2001. Representa a famosa música de Teddy Vieira e Luís Raimundo de 1955, que imortalizou a figura de um menino na Estrada de Ouro Fino.</string>
+    
+    <string name="boi_sem_coracao">Monumento Boi Sem Coração</string>
+    <string name="boi_sem_coracao_desc">Escultura que faz referência à música "Menino da Porteira", representando o trágico acontecimento narrado na canção que marcou a região.</string>
+    
+    <string name="santuario">Santuário São Francisco de Paula e Nossa Senhora de Fátima</string>
+    <string name="santuario_desc">Igreja Matriz com arquitetura deslumbrante e detalhes em ouro, refletindo a importância religiosa e histórica da cidade. Uma das paróquias mais antigas de Minas Gerais.</string>
+    
+    <string name="tabuao">Cachoeira do Tabuão</string>
+    <string name="tabuao_desc">Cachoeira de beleza natural incomparável com águas negras e diversas quedas d\'água. Ideal para banhos e contemplação da natureza.</string>
+    
+    <string name="pavilhao_malhas">Pavilhão das Malhas</string>
+    <string name="pavilhao_malhas_desc">Centro comercial que representa a importância econômica da indústria têxtil em Ouro Fino, parte do Circuito Turístico das Malhas do Sul de Minas.</string>
+    
+    <string name="praca_berrante">Praça do Berrante</string>
+    <string name="praca_berrante_desc">Espaço público que celebra a tradição sertaneja da região, com referências ao berrante (instrumento musical tradicional de boiadeiros).</string>
+    
+    <string name="pedra_itaguacu">Pedra do Itaguaçu</string>
+    <string name="pedra_itaguacu_desc">Formação rochosa natural em meio à paisagem montanhosa, oferecendo vistas panorâmicas da região.</string>
+    
+    <string name="lagos_palomos">Lagos dos Palomos</string>
+    <string name="lagos_palomos_desc">Corpos d\'água que formam um cenário tranquilo e bucólico, perfeitos para passeios relaxantes em contato com a natureza.</string>
+    
+    <string name="cafe_com_leite">Casa do Café com Leite</string>
+    <string name="cafe_com_leite_desc">Residência histórica onde foi assinado o "Acordo Café com Leite" em 1913, importante tratado político da República Velha brasileira, selando o revezamento da presidência entre Minas Gerais e São Paulo.</string>
+    
+    <string name="estatua_luiz_gonzaga">Estátua Luiz Gonzaga</string>
+    <string name="estatua_luiz_gonzaga_desc">Homenagem ao famoso músico nordestino, refletindo a influência cultural e musical sertaneja na região.</string>
+    
+    <string name="cine_matilde">Cinema Profª Matilde Isabel de Almeida Paiva</string>
+    <string name="cine_matilde_desc">Teatro histórico que preserva a memória cultural da cidade, importante espaço para apresentações e eventos culturais.</string>
+    
+    <string name="santo_cruzeiro">Santo Cruzeiro</string>
+    <string name="santo_cruzeiro_desc">Monumento religioso e ponto de referência na cidade, símbolo da fé cristã e da tradição espiritual de Ouro Fino.</string>
+    
+    <string name="bateador">Monumento do Bateador</string>
+    <string name="bateador_desc">Escultura que representa o ofício tradicional da mineração de ouro, lembrando o legado econômico que moldou a cidade durante o Ciclo do Ouro.</string>
+    
+    <string name="jardim_municipal">Jardim Municipal</string>
+    <string name="jardim_municipal_desc">Espaço verde bem cuidado que oferece ambiente agradável para passeios, descanso e contemplação da flora local.</string>
+
+    <!-- History Content -->
+    <string name="history_discovery_text">Durante o final do século XVII, bandeirantes paulistas exploravam as montanhas de Minas Gerais em busca de metais preciosos. Entre 1693 e 1695, descobertas simultâneas de ouro marcaram diferentes regiões, incluindo o Rio das Velhas e áreas que viriam a formar a região de Ouro Fino. Estes depósitos auríferos despertaram grande interesse da Coroa Portuguesa e atraíram milhares de pessoas em busca de enriquecimento.</string>
+    
+    <string name="history_founding_text">O Arraial de Ouro Fino foi fundado oficialmente pelo Guarda-mor Francisco Martins Lustosa, figura portuguesa que construiu a Capela de São Francisco de Paula no local. Inicialmente, a região tornou-se motivo de disputa entre as Capitanias de São Paulo e Minas Gerais devido às riquezas encontradas. Foi apenas em setembro de 1708 que a jurisdição foi definitivamente atribuída a Minas Gerais, por ordem do Rei Dom João V, após solicitação do regente de Minas, Gomes Freire de Andrade.</string>
+    
+    <string name="history_gold_cycle_text">Durante o século XVIII, Ouro Fino integrou o grande movimento econômico do Ciclo do Ouro em Minas Gerais. A mineração, especialmente através de técnicas de bateia e canaletas, era a atividade principal. Portugal impunha pesados impostos, como o "Quinto" (20% de todo ouro extraído) e a "Derrama" (complemento para atingir 1.500 quilos anuais à Coroa). Apesar da riqueza inicial, o ouro foi se esgotando ao longo do século, alterando a economia regional.</string>
+    
+    <string name="history_modernization_text">A transição do século XIX para o XX marcou a transformação de Ouro Fino. A cidade evoluiu de um pequeno arraial minerador para um município com atividades diversificadas. A indústria têxtil ganhou importância crescente, consolidando Ouro Fino como parte do Circuito das Malhas do Sul de Minas. A canção "Menino da Porteira" (1955) elevou a cidade ao conhecimento nacional, tornando-a símbolo da cultura sertaneja mineira. Atualmente, Ouro Fino equilibra seu patrimônio histórico com desenvolvimento sustentável e turismo cultural.</string>
+
+    <!-- About -->
+    <string name="about_title">Sobre o Aplicativo</string>
+    <string name="about_description">Aplicativo desenvolvido para mostrar a riqueza histórica e cultural de Ouro Fino, Minas Gerais. Inclui informações sobre monumentos, atrações naturais e integração com mapas para facilitar a visita dos turistas.</string>
+    <string name="about_version">Versão 1.0.0</string>
+    <string name="about_developer">Desenvolvido para a Prefeitura de Ouro Fino - MG</string>
+
+    <!-- Common -->
+    <string name="distance">Distância: %1$.2f km</string>
+    <string name="coordinates">Coordenadas: %1$.4f, %2$.4f</string>
+    <string name="open_map">Abrir no Mapa</string>
+    <string name="share">Compartilhar</string>
+    <string name="back">Voltar</string>
+    <string name="loading">Carregando...</string>
+    <string name="error">Erro ao carregar</string>
+</resources>
