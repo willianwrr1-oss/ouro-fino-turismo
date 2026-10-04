@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data-extraction-rules>
-    <domain-config>
-        <domain includeSubdomains="true">example.com</domain>
-        <exclude-path "/test" />
-    </domain-config>
+    <cloud-backup>
+        <include domain="sharedpref" path="." />
+    </cloud-backup>
 </data-extraction-rules>
