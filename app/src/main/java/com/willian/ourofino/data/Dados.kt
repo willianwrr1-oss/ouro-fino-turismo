@@ -44,6 +44,7 @@ object OuroFinoDados {
     const val CENTRO_LON = -46.3715
 
     const val EMAIL_CONTATO = "willian.wrr1@gmail.com"
+    const val CREDITO_FOTOS_PROPRIAS = "Willian R Rocha"
 
     val fotoMenino = Foto(
         url = "https://commons.wikimedia.org/wiki/Special:FilePath/Menino_da_Porteira.JPG?width=1200",
@@ -109,7 +110,7 @@ object OuroFinoDados {
             nome = "Praça do Berrante",
             resumo = "Escultura gigante de um berrante, no centro.",
             descricao = "Praça com a escultura de um berrante, instrumento símbolo dos boiadeiros e tema da canção que projetou a cidade. " +
-                "Segundo relatos de visitantes, a peça passa de 16 metros de comprimento. Fica a uma curta caminhada dos demais monumentos do centro.",
+                "Segundo guias de turismo, a peça tem 16 metros de comprimento. À noite, a praça costuma receber food trucks. Fica a uma curta caminhada dos demais monumentos do centro.",
             categoria = Categoria.MONUMENTO,
             endereco = "Centro",
             latitude = null,
@@ -135,7 +136,7 @@ object OuroFinoDados {
             nome = "Pedra do Itaguaçu",
             resumo = "Vista ampla da serra, a cerca de 15 km do centro.",
             descricao = "Imponente formação rochosa na área rural, a cerca de 15 km da área urbana. A Prefeitura a destaca entre os atrativos de " +
-                "ecoturismo, com fauna e flora preservadas, trilhas e cavalgadas. Do alto, a vista alcança boa parte da região.",
+                "ecoturismo, com fauna e flora preservadas, trilhas e cavalgadas. Guias de turismo citam cerca de 1.500 m de altitude e vista para várias cidades vizinhas.",
             categoria = Categoria.NATUREZA,
             endereco = "Zona rural de Ouro Fino",
             latitude = null,

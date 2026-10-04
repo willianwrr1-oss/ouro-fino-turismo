@@ -40,6 +40,7 @@ import com.willian.ourofino.ui.components.SeloCategoria
 import com.willian.ourofino.ui.components.TextoOuroClaro
 import com.willian.ourofino.ui.components.TituloDeSecao
 import com.willian.ourofino.ui.components.abrirLink
+import com.willian.ourofino.ui.components.fotoLocalDe
 import com.willian.ourofino.ui.components.urlComoChegar
 import com.willian.ourofino.ui.components.urlFotosNoMapa
 
@@ -106,7 +107,7 @@ fun AttractionsScreen(onVerNoMapa: (String) -> Unit) {
 
         item {
             Text(
-                text = "As fotos vêm do Wikimedia Commons, com crédito do autor e licença. Onde não há foto livre disponível, " +
+                text = "As fotos vêm do Wikimedia Commons (com crédito e licença) ou do acervo do autor do app. Onde ainda não há foto, " +
                     "use “Ver fotos no Google Maps”.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -164,7 +165,7 @@ private fun CartaoAtracao(ponto: PontoTuristico, onVerNoMapa: (String) -> Unit) 
                     shape = RoundedCornerShape(12.dp)
                 ) { Text("Como chegar") }
             }
-            if (ponto.foto == null) {
+            if (ponto.foto == null && context.fotoLocalDe(ponto) == 0) {
                 TextButton(onClick = { context.abrirLink(urlFotosNoMapa(ponto)) }) {
                     Text("Ver fotos no Google Maps")
                 }

@@ -130,6 +130,11 @@ fun AboutScreen() {
                 ) {
                     CreditoFoto("Monumento Menino da Porteira", OuroFinoDados.fotoMenino)
                     CreditoFoto("Vista de Ouro Fino (tela História)", OuroFinoDados.fotoCidade)
+                    Text(
+                        text = "Demais fotos, quando houver: acervo de " + OuroFinoDados.CREDITO_FOTOS_PROPRIAS + ".",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
         }

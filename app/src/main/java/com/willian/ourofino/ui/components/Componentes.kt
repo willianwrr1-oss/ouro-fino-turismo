@@ -25,17 +25,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.willian.ourofino.data.Categoria
 import com.willian.ourofino.data.Foto
+import com.willian.ourofino.data.OuroFinoDados
 import com.willian.ourofino.data.PontoTuristico
 import com.willian.ourofino.ui.theme.HeroBrush
 import com.willian.ourofino.ui.theme.OuroClaro
@@ -68,6 +71,10 @@ fun urlComoChegar(p: PontoTuristico): String {
         "https://www.google.com/maps/search/?api=1&query=" + Uri.encode(p.consultaMapa)
     }
 }
+
+/** Fotos próprias: arquivos app/src/main/res/drawable-nodpi/foto_<id com underline>.jpg (ex.: foto_santuario.jpg). Retorna 0 se não existir. */
+fun Context.fotoLocalDe(p: PontoTuristico): Int =
+    resources.getIdentifier("foto_" + p.id.replace('-', '_'), "drawable", packageName)
 
 fun urlFotosNoMapa(p: PontoTuristico): String =
     "https://www.google.com/maps/search/?api=1&query=" + Uri.encode(p.consultaMapa)
@@ -189,26 +196,40 @@ fun FotoDoPonto(ponto: PontoTuristico, altura: Dp, modifier: Modifier = Modifier
                 .align(Alignment.Center)
                 .size(64.dp)
         )
+        val context = LocalContext.current
+        val fotoLocal = remember(ponto.id) { context.fotoLocalDe(ponto) }
         val foto = ponto.foto
-        if (foto != null) {
+        if (fotoLocal != 0) {
+            AsyncImage(
+                model = fotoLocal,
+                contentDescription = ponto.nome,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            LegendaDaFoto("Foto: " + OuroFinoDados.CREDITO_FOTOS_PROPRIAS, Modifier.align(Alignment.BottomStart))
+        } else if (foto != null) {
             AsyncImage(
                 model = foto.url,
                 contentDescription = ponto.nome,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
-            Text(
-                text = foto.legenda,
-                color = Color.White,
-                fontSize = 10.sp,
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .fillMaxWidth()
-                    .background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xAA000000))))
-                    .padding(horizontal = 10.dp, vertical = 6.dp)
-            )
+            LegendaDaFoto(foto.legenda, Modifier.align(Alignment.BottomStart))
         }
     }
+}
+
+@Composable
+private fun LegendaDaFoto(texto: String, modifier: Modifier = Modifier) {
+    Text(
+        text = texto,
+        color = Color.White,
+        fontSize = 10.sp,
+        modifier = modifier
+            .fillMaxWidth()
+            .background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xAA000000))))
+            .padding(horizontal = 10.dp, vertical = 6.dp)
+    )
 }
 
 @Composable
