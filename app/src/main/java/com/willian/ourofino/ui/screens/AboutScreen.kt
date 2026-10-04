@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.willian.ourofino.data.CaminhoDaFe
 import com.willian.ourofino.data.Foto
 import com.willian.ourofino.data.OuroFinoDados
+import com.willian.ourofino.data.Privacidade
 import com.willian.ourofino.ui.components.HeroHeader
 import com.willian.ourofino.ui.components.TextoOuroClaro
 import com.willian.ourofino.ui.components.TituloDeSecao
@@ -32,7 +33,7 @@ import com.willian.ourofino.ui.components.abrirEmail
 import com.willian.ourofino.ui.components.abrirLink
 
 @Composable
-fun AboutScreen() {
+fun AboutScreen(onVoltar: () -> Unit) {
     val context = LocalContext.current
     val versao = remember {
         try {
@@ -47,7 +48,7 @@ fun AboutScreen() {
         contentPadding = PaddingValues(bottom = 28.dp)
     ) {
         item {
-            HeroHeader(alturaMinima = 220.dp) {
+            HeroHeader(alturaMinima = 220.dp, onVoltar = onVoltar) {
                 TextoOuroClaro("SOBRE O APLICATIVO")
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -100,6 +101,47 @@ fun AboutScreen() {
                                 }
                             )
                         }
+                    }
+                }
+            }
+        }
+
+        item {
+            Column {
+                Spacer(modifier = Modifier.height(28.dp))
+                TituloDeSecao("Privacidade e proteção de dados")
+                Spacer(modifier = Modifier.height(12.dp))
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    shape = RoundedCornerShape(18.dp),
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Privacidade.paragrafos.forEachIndexed { indice, par ->
+                            if (indice > 0) Spacer(modifier = Modifier.height(14.dp))
+                            Text(
+                                text = par.first,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = par.second,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(14.dp))
+                        Text(
+                            text = "Dúvidas sobre este aviso? Fale com o desenvolvedor pelo e-mail acima.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = Privacidade.ATUALIZACAO,
+                            style = MaterialTheme.typography.labelSmall
+                        )
                     }
                 }
             }

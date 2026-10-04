@@ -53,7 +53,7 @@ private val AmareloSeta = Color(0xFFF2C300)
 private class ItemFoto(val modelo: Any, val legenda: String, val link: String?)
 
 @Composable
-fun CaminhoScreen(onVerMenino: () -> Unit) {
+fun CaminhoScreen(onVerMenino: () -> Unit, onVoltar: () -> Unit) {
     val context = LocalContext.current
 
     // Fotos próprias (foto_caminho_1 ... foto_caminho_8) têm prioridade; o Commons completa as 3 primeiras posições.
@@ -76,7 +76,7 @@ fun CaminhoScreen(onVerMenino: () -> Unit) {
         contentPadding = PaddingValues(bottom = 28.dp)
     ) {
         item {
-            HeroHeader(alturaMinima = 300.dp) {
+            HeroHeader(alturaMinima = 300.dp, onVoltar = onVoltar) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_caminho),
                     contentDescription = null,

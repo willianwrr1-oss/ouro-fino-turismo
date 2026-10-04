@@ -462,3 +462,91 @@ object CaminhoDaFe {
         Fonte("Prefeitura de Ouro Fino", "Crisólia como distrito do município")
     )
 }
+
+enum class TipoLocal(val rotulo: String) {
+    RESTAURANTE("Restaurantes"),
+    PIZZA_CHURRASCO("Pizza e churrasco"),
+    LANCHES("Lanches e burgers"),
+    CAFES("Pastéis, cafés e padarias"),
+    BARES("Bares")
+}
+
+data class Estabelecimento(
+    val nome: String,
+    val tipo: TipoLocal,
+    val descricao: String,
+    val endereco: String? = null
+) {
+    val consultaMapa: String
+        get() = nome + (if (endereco != null) ", $endereco" else "") + ", Ouro Fino, MG"
+}
+
+object Gastronomia {
+
+    val introducao: String =
+        "Ouro Fino tem bares, restaurantes, pizzarias, lanchonetes e cafés espalhados pela cidade, e a maior parte dos endereços fica no centro, " +
+            "em especial na Rua Treze de Maio. Esta lista reúne os lugares mais citados em guias de viagem e avaliações públicas."
+
+    val aviso: String =
+        "A lista não é completa e não tem caráter publicitário: nenhum estabelecimento pagou para aparecer. " +
+            "Horários, endereços e funcionamento mudam com frequência, então confirme no Google Maps antes de ir."
+
+    val locais: List<Estabelecimento> = listOf(
+        // Restaurantes
+        Estabelecimento("Nikola's Restaurante", TipoLocal.RESTAURANTE, "Comida brasileira. Um dos restaurantes mais citados em guias de viagem da cidade."),
+        Estabelecimento("Restaurante Delícia de Sabor", TipoLocal.RESTAURANTE, "Comida caseira com sabor mineiro.", "Rua Senador Miranda Júnior, 302"),
+        Estabelecimento("Restaurante Porteira de Ouro", TipoLocal.RESTAURANTE, "Restaurante no centro, na Rua Treze de Maio.", "Rua Treze de Maio, 440, loja 2"),
+        Estabelecimento("Bibas Restaurante", TipoLocal.RESTAURANTE, "Comida brasileira com preços acessíveis, segundo guias de viagem."),
+        Estabelecimento("Restaurante Fogão a Lenha", TipoLocal.RESTAURANTE, "Aparece entre os restaurantes mais bem posicionados da cidade no Tripadvisor."),
+        Estabelecimento("Franceli Restaurante", TipoLocal.RESTAURANTE, "Cozinha italiana, segundo o Tripadvisor."),
+        Estabelecimento("Espaço Fit Gourmet", TipoLocal.RESTAURANTE, "Comida saudável, com serviço de entrega.", "Rua Doutor Silvano Brandão, 914"),
+        // Pizza e churrasco
+        Estabelecimento("Restaurante e Pizzaria Don Paolo", TipoLocal.PIZZA_CHURRASCO, "Pizzas e pratos da cozinha brasileira.", "Rua Major Sebastião Pires, 95"),
+        Estabelecimento("Pizzaria Mona Lisa", TipoLocal.PIZZA_CHURRASCO, "Pizzaria bem avaliada por visitantes.", "Praça Paulino Paulini, 74"),
+        Estabelecimento("PapaPizza", TipoLocal.PIZZA_CHURRASCO, "Pizzaria com serviço de entrega, na Rua Treze de Maio."),
+        Estabelecimento("Pizzaria e Esfiharia Aladim", TipoLocal.PIZZA_CHURRASCO, "Pizzas e esfihas.", "Rua Treze de Maio, 1294"),
+        Estabelecimento("Churrascaria Cantinho da Costela", TipoLocal.PIZZA_CHURRASCO, "Churrasco, com opção de almoço.", "Rua Antero Simões, 55"),
+        // Lanches e burgers
+        Estabelecimento("Coronel Burger", TipoLocal.LANCHES, "Hamburgueria no centro.", "Rua Treze de Maio, 1098, letra A"),
+        Estabelecimento("Burger Artesanal Del Toro", TipoLocal.LANCHES, "Hambúrguer artesanal.", "Rua Prefeito José Serra, 163, fundos"),
+        Estabelecimento("Capitol Hill Hamburgueria", TipoLocal.LANCHES, "Hamburgueria no centro.", "Avenida Cyro Gonçalves, 59"),
+        Estabelecimento("Esquema Lanches", TipoLocal.LANCHES, "Macarrão na chapa, comida caseira, lanches, pizza, churrasco e massas, em ambiente familiar.", "Avenida Cyro Gonçalves, 120"),
+        Estabelecimento("Parada da Manu", TipoLocal.LANCHES, "Lanches ao lado do Monumento Menino da Porteira, ponto de parada de peregrinos do Caminho da Fé."),
+        // Pastéis, cafés e padarias
+        Estabelecimento("Aroma Café", TipoLocal.CAFES, "Café no centro.", "Rua Treze de Maio, 589"),
+        Estabelecimento("Café Caminho de Minas", TipoLocal.CAFES, "Em frente ao Monumento Menino da Porteira. Atendimento elogiado por peregrinos e aceita animais de estimação."),
+        Estabelecimento("Pastelaria do Cesinha", TipoLocal.CAFES, "Pastelaria e lanchonete no centro.", "Rua Prefeito José Serra, 173, letra C"),
+        Estabelecimento("Pão na Massa Padaria Artesanal", TipoLocal.CAFES, "Padaria artesanal bem avaliada no Tripadvisor."),
+        Estabelecimento("Grano Empório & Café", TipoLocal.CAFES, "Café e empório de inspiração italiana.", "Avenida Cyro Gonçalves, 178, sala 1"),
+        Estabelecimento("Sorveteria Adio", TipoLocal.CAFES, "Sorveteria citada em guias de viagem."),
+        // Bares
+        Estabelecimento("Bar Brasília", TipoLocal.BARES, "Bar e pastelaria, com pastéis elogiados por visitantes. Aparece como o bar mais bem avaliado da cidade no Tripadvisor.", "Rua Treze de Maio, 811"),
+        Estabelecimento("Bar do Mussarela", TipoLocal.BARES, "Bar no centro, na Rua Treze de Maio.", "Rua Treze de Maio, 514"),
+        Estabelecimento("Bar do Trevo", TipoLocal.BARES, "Bar e lanchonete no centro.", "Rua Coronel João Ribeiro, 134"),
+        Estabelecimento("Bar do Osmar", TipoLocal.BARES, "Bar no centro.", "Rua Treze de Maio, 1338"),
+        Estabelecimento("Bar Marinello", TipoLocal.BARES, "Bar no centro.", "Rua Américo Marinello, 194"),
+        Estabelecimento("Bar do Guinho", TipoLocal.BARES, "Bar listado entre os mais citados da cidade."),
+        Estabelecimento("Bar Ponte Preta", TipoLocal.BARES, "Bar listado entre os mais citados da cidade.")
+    )
+
+    val fontes: String =
+        "Dados compilados em outubro de 2026 a partir de listagens públicas (Tripadvisor, Apontador, guias comerciais) e de relatos de visitantes."
+}
+
+object Privacidade {
+    const val ATUALIZACAO = "Atualizado em outubro de 2026"
+
+    val paragrafos: List<Pair<String, String>> = listOf(
+        "Finalidade" to
+            "Este aplicativo tem um único objetivo: apresentar a história e o turismo de Ouro Fino (MG). Ele funciona só com o que é necessário para mostrar esse conteúdo, em linha com os princípios de finalidade e necessidade da Lei Geral de Proteção de Dados (LGPD, Lei nº 13.709/2018).",
+        "Nenhuma coleta de dados" to
+            "O aplicativo não coleta, não armazena e não compartilha dados pessoais. Não há cadastro, login, formulários, anúncios, ferramentas de análise ou rastreamento.",
+        "Permissões" to
+            "O aplicativo não pede acesso à sua localização, contatos, câmera, microfone ou arquivos. A única permissão usada é a de internet, para carregar mapas e fotos.",
+        "Serviços de terceiros" to
+            "Para exibir o mapa e as fotos, o aplicativo se conecta ao OpenStreetMap e ao Wikimedia Commons. Como em qualquer acesso à internet, esses serviços podem registrar dados técnicos, como o endereço IP, conforme as próprias políticas deles. " +
+            "Os botões Como chegar, Abrir no Maps e os links abrem aplicativos externos (como Google Maps, navegador e e-mail), que seguem as políticas de cada um.",
+        "Armazenamento no aparelho" to
+            "Mapas e imagens podem ficar guardados temporariamente no aparelho (cache) para o aplicativo carregar mais rápido. Esses arquivos não contêm dados pessoais e podem ser apagados em Configurações do Android, em Aplicativos, Armazenamento."
+    )
+}

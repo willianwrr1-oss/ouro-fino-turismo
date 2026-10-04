@@ -40,7 +40,8 @@ fun HomeScreen(
     onVerAtracoes: () -> Unit,
     onVerHistoria: () -> Unit,
     onVerMapa: () -> Unit,
-    onVerCaminho: () -> Unit
+    onVerCaminho: () -> Unit,
+    onVerGastronomia: () -> Unit
 ) {
     val destaques = OuroFinoDados.pontos.filter { it.destaque }
 
@@ -169,6 +170,38 @@ fun HomeScreen(
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(
                             text = "Conheça a história da peregrinação, as etapas e o que o peregrino encontra por aqui.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            }
+        }
+
+        item {
+            Column {
+                Spacer(modifier = Modifier.height(14.dp))
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .clickable(onClick = onVerGastronomia),
+                    shape = RoundedCornerShape(20.dp),
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = "GASTRONOMIA",
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = "Onde comer e beber em Ouro Fino",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = "Restaurantes, pizzarias, lanchonetes, cafés e bares do centro e arredores.",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }

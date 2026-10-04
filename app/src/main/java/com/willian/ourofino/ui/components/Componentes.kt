@@ -90,6 +90,7 @@ fun HeroHeader(
     modifier: Modifier = Modifier,
     foto: Foto? = null,
     alturaMinima: Dp = 200.dp,
+    onVoltar: (() -> Unit)? = null,
     conteudo: @Composable ColumnScope.() -> Unit
 ) {
     Box(
@@ -120,11 +121,23 @@ fun HeroHeader(
                     .padding(horizontal = 12.dp, vertical = 6.dp)
             )
         }
+        if (onVoltar != null) {
+            Text(
+                text = "‹ Voltar",
+                style = MaterialTheme.typography.labelLarge,
+                color = Color.White,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .statusBarsPadding()
+                    .clickable(onClick = onVoltar)
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+            )
+        }
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .statusBarsPadding()
-                .padding(start = 20.dp, end = 20.dp, top = 36.dp, bottom = 22.dp),
+                .padding(start = 20.dp, end = 20.dp, top = 56.dp, bottom = 22.dp),
             content = conteudo
         )
     }

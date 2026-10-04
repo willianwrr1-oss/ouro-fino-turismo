@@ -26,20 +26,27 @@ import com.willian.ourofino.R
 import com.willian.ourofino.ui.screens.AboutScreen
 import com.willian.ourofino.ui.screens.AttractionsScreen
 import com.willian.ourofino.ui.screens.CaminhoScreen
+import com.willian.ourofino.ui.screens.GastronomiaScreen
 import com.willian.ourofino.ui.screens.HistoryScreen
 import com.willian.ourofino.ui.screens.HomeScreen
+import com.willian.ourofino.ui.screens.MaisScreen
 import com.willian.ourofino.ui.screens.MapScreen
 
 sealed class Rota(val rota: String, val rotulo: String, val icone: Int) {
     object Inicio : Rota("inicio", "Início", R.drawable.ic_home)
     object Historia : Rota("historia", "História", R.drawable.ic_history)
     object Atracoes : Rota("atracoes", "Atrações", R.drawable.ic_location)
-    object Caminho : Rota("caminho", "Caminho", R.drawable.ic_caminho)
     object Mapa : Rota("mapa", "Mapa", R.drawable.ic_map)
+    object Mais : Rota("mais", "Mais", R.drawable.ic_more)
+    object Caminho : Rota("caminho", "Caminho da Fé", R.drawable.ic_caminho)
+    object Gastronomia : Rota("gastronomia", "Gastronomia", R.drawable.ic_restaurant)
     object Sobre : Rota("sobre", "Sobre", R.drawable.ic_info)
 }
 
-private val abas = listOf(Rota.Inicio, Rota.Historia, Rota.Atracoes, Rota.Caminho, Rota.Mapa, Rota.Sobre)
+private val abas = listOf(Rota.Inicio, Rota.Historia, Rota.Atracoes, Rota.Mapa, Rota.Mais)
+
+// Telas abertas a partir de "Mais": a aba Mais continua marcada enquanto elas estão visíveis.
+private val rotasDeMais = setOf(Rota.Mais.rota, Rota.Caminho.rota, Rota.Gastronomia.rota, Rota.Sobre.rota)
 
 private fun NavHostController.irPara(rota: Rota) {
     navigate(rota.rota) {
@@ -47,6 +54,10 @@ private fun NavHostController.irPara(rota: Rota) {
         launchSingleTop = true
         restoreState = true
     }
+}
+
+private fun NavHostController.abrir(rota: Rota) {
+    navigate(rota.rota) { launchSingleTop = true }
 }
 
 @Composable
@@ -62,10 +73,15 @@ fun OuroFinoApp() {
         bottomBar = {
             NavigationBar {
                 abas.forEach { aba ->
+                    val selecionada = if (aba == Rota.Mais) {
+                        destinoAtual?.route in rotasDeMais
+                    } else {
+                        destinoAtual?.hierarchy?.any { it.route == aba.rota } == true
+                    }
                     NavigationBarItem(
                         icon = { Icon(painterResource(id = aba.icone), contentDescription = aba.rotulo) },
                         label = { Text(aba.rotulo) },
-                        selected = destinoAtual?.hierarchy?.any { it.route == aba.rota } == true,
+                        selected = selecionada,
                         onClick = { navController.irPara(aba) }
                     )
                 }
@@ -82,7 +98,8 @@ fun OuroFinoApp() {
                     onVerAtracoes = { navController.irPara(Rota.Atracoes) },
                     onVerHistoria = { navController.irPara(Rota.Historia) },
                     onVerMapa = { navController.irPara(Rota.Mapa) },
-                    onVerCaminho = { navController.irPara(Rota.Caminho) }
+                    onVerCaminho = { navController.abrir(Rota.Caminho) },
+                    onVerGastronomia = { navController.abrir(Rota.Gastronomia) }
                 )
             }
             composable(Rota.Historia.rota) { HistoryScreen() }
@@ -94,16 +111,29 @@ fun OuroFinoApp() {
                     }
                 )
             }
+            composable(Rota.Mapa.rota) { MapScreen(focoId = focoMapa) }
+            composable(Rota.Mais.rota) {
+                MaisScreen(
+                    onGastronomia = { navController.abrir(Rota.Gastronomia) },
+                    onCaminho = { navController.abrir(Rota.Caminho) },
+                    onSobre = { navController.abrir(Rota.Sobre) }
+                )
+            }
             composable(Rota.Caminho.rota) {
                 CaminhoScreen(
                     onVerMenino = {
                         focoMapa = "menino-porteira"
                         navController.irPara(Rota.Mapa)
-                    }
+                    },
+                    onVoltar = { navController.popBackStack() }
                 )
             }
-            composable(Rota.Mapa.rota) { MapScreen(focoId = focoMapa) }
-            composable(Rota.Sobre.rota) { AboutScreen() }
+            composable(Rota.Gastronomia.rota) {
+                GastronomiaScreen(onVoltar = { navController.popBackStack() })
+            }
+            composable(Rota.Sobre.rota) {
+                AboutScreen(onVoltar = { navController.popBackStack() })
+            }
         }
     }
 }
