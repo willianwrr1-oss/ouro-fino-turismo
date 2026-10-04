@@ -69,7 +69,7 @@ object OuroFinoDados {
             resumo = "O símbolo mais famoso da cidade, no trevo de entrada.",
             descricao = "Escultura em concreto com cerca de 10 metros de altura, instalada no trevo de acesso a Ouro Fino, na MG-290. " +
                 "Homenageia a canção “O Menino da Porteira”, de Teddy Vieira e Luizinho, que cita a estrada de Ouro Fino e ficou " +
-                "nacionalmente conhecida na voz de Sérgio Reis. O próprio cantor inaugurou o monumento em março de 2001.",
+                "nacionalmente conhecida na voz de Sérgio Reis. O próprio cantor inaugurou o monumento em março de 2001. Também é um dos primeiros marcos que os peregrinos do Caminho da Fé encontram ao chegar à cidade.",
             categoria = Categoria.MONUMENTO,
             endereco = "Rodovia MG-290, km 60 (trevo de acesso à cidade)",
             latitude = -22.275578,
@@ -97,7 +97,7 @@ object OuroFinoDados {
             descricao = "A paróquia de São Francisco de Paula foi criada em 1749, a partir da capela erguida pelo Guarda-Mor " +
                 "Francisco Martins Lustosa. A igreja matriz tem o título de Santuário desde 2007 e guarda uma relíquia de " +
                 "São Francisco de Paula, enviada pelo Papa Pio XII em 1957. Segundo a Prefeitura, abriga o Museu de Arte Sacra, " +
-                "o único museu sacro do Sul de Minas.",
+                "o único museu sacro do Sul de Minas. Os peregrinos do Caminho da Fé costumam passar pelo centro e pela matriz.",
             categoria = Categoria.RELIGIOSO,
             endereco = "Praça Monsenhor Teófilo – Centro",
             latitude = -22.282938,
@@ -313,5 +313,152 @@ object OuroFinoDados {
         Fonte("Prefeitura Municipal de Ouro Fino", "Página “Nossa história, nosso maior tesouro”"),
         Fonte("Senado Federal", "Projeto de Lei nº 713/2023 – Pacto de Ouro Fino"),
         Fonte("Flags of the World", "Bandeira e brasão de Ouro Fino, com base no site oficial da Prefeitura")
+    )
+}
+
+
+data class FotoCaminho(val url: String, val legenda: String, val paginaOrigem: String)
+
+data class EtapaCaminho(val nome: String, val nota: String?, val ateProxima: String?, val destaque: Boolean = false)
+
+data class Dica(val titulo: String, val texto: String)
+
+object CaminhoDaFe {
+
+    const val SITE_OFICIAL = "https://caminhodafe.com.br/"
+
+    val resumo: String =
+        "O Caminho da Fé é uma rota de peregrinação inspirada no Caminho de Santiago de Compostela, na Espanha. " +
+            "Foi criada para dar estrutura a quem já ia a pé ao Santuário Nacional de Nossa Senhora Aparecida, oferecendo pontos de apoio, " +
+            "hospedagem e sinalização. A rota atravessa a Serra da Mantiqueira, entre Minas Gerais e São Paulo, por estradas rurais, trilhas, bosques e asfalto."
+
+    val marcos: List<Evento> = listOf(
+        Evento(
+            "Antes de 2003", "A ideia vem da Espanha",
+            "O empresário Almiro José Grings, de Águas da Prata (SP), conhece o Caminho de Santiago de Compostela e volta com o desejo de criar algo parecido no Brasil. " +
+                "Ele reúne amigos, entre eles Clóvis Tavares de Lima e Iracema Tamashiro, e o trio dá início aos primeiros contatos e ao traçado."
+        ),
+        Evento(
+            "O traçado", "Um caminho “sem interferência política”",
+            "Com a ajuda de um mapa, a rota foi imaginada a partir de Águas da Prata até Aparecida, privilegiando o caminho mais lógico e adequado ao perfil de peregrino. " +
+                "O nome “Caminho da Fé” e o termo “pousada”, usado para os locais de pernoite, foram escolhidos em assembleia."
+        ),
+        Evento(
+            "11 fev 2003", "Inauguração",
+            "O Caminho da Fé é inaugurado em Águas da Prata (SP). Com voluntários e moradores locais, são feitas as primeiras marcações das setas amarelas."
+        ),
+        Evento(
+            "15 ago 2003", "Associação dos Amigos",
+            "Meses depois da inauguração é criada a Associação dos Amigos do Caminho da Fé (AACF), responsável pela organização, pela sinalização e pelo desenvolvimento da rota."
+        ),
+        Evento(
+            "2023", "20 anos de Caminho",
+            "A rota completa duas décadas, com expedição comemorativa pelo ramal de Águas da Prata, o primeiro criado oficialmente."
+        ),
+        Evento(
+            "Jul 2026", "Despedida do idealizador",
+            "Almiro José Grings morre aos 85 anos. O Santuário Nacional de Aparecida lembrou que o legado dele segue vivo a cada peregrino que acompanha as setas amarelas."
+        )
+    )
+
+    val ouroFinoNoCaminho: List<Dica> = listOf(
+        Dica(
+            "Onde Ouro Fino aparece",
+            "Ouro Fino está no trajeto tradicional, o ramal de Águas da Prata. Depois de Andradas, a rota passa pela Serra dos Limas, pela comunidade da Barra e pelo distrito de Crisólia " +
+                "(ambos no município) antes de chegar ao centro de Ouro Fino. Daqui, segue para Inconfidentes."
+        ),
+        Dica(
+            "Quanto se caminha",
+            "Relatos de peregrinos indicam cerca de 22 km de Andradas até a Barra e cerca de 30 km da Barra até Inconfidentes, passando por Crisólia e Ouro Fino. " +
+                "De Crisólia ao centro são uns 6 a 8 km, e do centro até Inconfidentes, uns 8 a 10 km."
+        ),
+        Dica(
+            "O que o peregrino encontra",
+            "Ao entrar na cidade, o peregrino dá de cara com o Monumento Menino da Porteira, e há paradas para lanche bem ao lado, segundo relatos. " +
+                "Depois, atravessa o centro, onde fica o Santuário de São Francisco de Paula e Nossa Senhora de Fátima, e segue pela Estrada dos Santos Negros em direção a Inconfidentes."
+        ),
+        Dica(
+            "Um trecho exigente",
+            "A etapa que antecede Ouro Fino é considerada bastante difícil por causa da subida da Serra dos Limas, com sol forte e descidas intensas."
+        )
+    )
+
+    val etapas: List<EtapaCaminho> = listOf(
+        EtapaCaminho("Águas da Prata (SP)", "Ponto de partida do trajeto tradicional", "≈ 32 km"),
+        EtapaCaminho("Andradas", null, null),
+        EtapaCaminho("Serra dos Limas", "Subida difícil", null),
+        EtapaCaminho("Barra", "Comunidade de Ouro Fino", "≈ 14 km"),
+        EtapaCaminho("Crisólia", "Distrito de Ouro Fino", "≈ 6 a 8 km"),
+        EtapaCaminho("Ouro Fino", "Você está aqui: Menino da Porteira, centro e Santuário", "≈ 8 a 10 km", destaque = true),
+        EtapaCaminho("Inconfidentes", null, "≈ 21 km"),
+        EtapaCaminho("Borda da Mata", null, null),
+        EtapaCaminho("Tocos do Moji", null, null),
+        EtapaCaminho("Estiva", null, null),
+        EtapaCaminho("Consolação", null, "≈ 22 km"),
+        EtapaCaminho("Paraisópolis", "Última cidade que emite a credencial", "≈ 130 km até Aparecida"),
+        EtapaCaminho("Luminosa", null, null),
+        EtapaCaminho("Campos do Jordão (SP)", null, null),
+        EtapaCaminho("Pedrinhas (SP)", null, null),
+        EtapaCaminho("Aparecida (SP)", "Santuário Nacional de Nossa Senhora Aparecida", null)
+    )
+
+    val comoFazer: List<Dica> = listOf(
+        Dica(
+            "Sinalização",
+            "O caminho é marcado por setas amarelas, pintadas em postes, mourões, pedras, muros, pistas e calçadas. Há também placas a cada 2 km com a distância que falta até a Basílica de Aparecida."
+        ),
+        Dica(
+            "Credencial do peregrino",
+            "É um documento retirado na cidade onde você começa. Ele é carimbado nas pousadas ao longo do trajeto e apresentado em Aparecida para receber o Certificado de Conclusão. " +
+                "É preciso ter percorrido pelo menos os últimos 100 km. A última cidade que emite a credencial é Paraisópolis (MG). Quem viaja de moto ou de carro não recebe credencial."
+        ),
+        Dica(
+            "Hospedagem e comida",
+            "Os locais de pernoite são chamados de pousadas e podem ser casas de moradores, albergues ou hotéis simples. A lista fica no site oficial, e vale reservar antes."
+        ),
+        Dica(
+            "Ritmo",
+            "A rota tradicional, de cerca de 318 km, costuma ser feita a pé em 12 a 13 dias, com 20 a 25 km por dia depois de Andradas. Muitos peregrinos saem de madrugada para evitar o sol. " +
+                "Também é possível fazer de bicicleta, em cerca de 5 a 6 dias."
+        ),
+        Dica(
+            "Melhor época",
+            "Entre maio e setembro o tempo é mais seco e as temperaturas são mais amenas. Evite o verão, por causa das chuvas. O movimento aumenta nos dias que antecedem o feriado de Nossa Senhora Aparecida, em 12 de outubro, e as festas juninas podem lotar a hospedagem em cidades mineiras."
+        ),
+        Dica(
+            "Dificuldade",
+            "É um caminho de nível médio a difícil, com subidas e descidas longas. A maior parte do trajeto é por estradas rurais. Prepare-se fisicamente e comece com um trecho curto se for sua primeira vez."
+        )
+    )
+
+    val numeros: List<Pair<String, String>> = listOf(
+        "≈ 318 km" to "de Águas da Prata a Aparecida",
+        "2003" to "ano da inauguração",
+        "12–13 dias" to "a pé, em média"
+    )
+
+    val fotos: List<FotoCaminho> = listOf(
+        FotoCaminho(
+            url = "https://commons.wikimedia.org/wiki/Special:FilePath/Caminho_da_F%C3%A9_(Vargem_Grande_do_Sul_e_%C3%81guas_Prata)_01.jpg?width=1200",
+            legenda = "Trecho do Caminho da Fé entre Vargem Grande do Sul e Águas da Prata (SP)",
+            paginaOrigem = "https://commons.wikimedia.org/wiki/File:Caminho_da_F%C3%A9_(Vargem_Grande_do_Sul_e_%C3%81guas_Prata)_01.jpg"
+        ),
+        FotoCaminho(
+            url = "https://commons.wikimedia.org/wiki/Special:FilePath/Placa_do_Caminho_da_F%C3%A9_com_as_setas_amarelas_na_SP-253_-_S%C3%A3o_Sim%C3%A3o_-_panoramio.jpg?width=1200",
+            legenda = "Placa com as setas amarelas do Caminho da Fé, na SP-253, em São Simão (SP)",
+            paginaOrigem = "https://commons.wikimedia.org/wiki/File:Placa_do_Caminho_da_F%C3%A9_com_as_setas_amarelas_na_SP-253_-_S%C3%A3o_Sim%C3%A3o_-_panoramio.jpg"
+        ),
+        FotoCaminho(
+            url = "https://commons.wikimedia.org/wiki/Special:FilePath/Portal_de_In%C3%ADcio_do_Caminho_da_F%C3%A9_em_Cravinhos_-_530_Kms_at%C3%A9_Aparecida_seguindo_as_setas_amarelas_no_caminho_(O_Caminho_de_Santiago_de_Compostela_Brasileiro)_-_panoramio.jpg?width=1200",
+            legenda = "Portal de início do Caminho da Fé em Cravinhos (SP), outro ramal da rede",
+            paginaOrigem = "https://commons.wikimedia.org/wiki/File:Portal_de_In%C3%ADcio_do_Caminho_da_F%C3%A9_em_Cravinhos_-_530_Kms_at%C3%A9_Aparecida_seguindo_as_setas_amarelas_no_caminho_(O_Caminho_de_Santiago_de_Compostela_Brasileiro)_-_panoramio.jpg"
+        )
+    )
+
+    val fontes: List<Fonte> = listOf(
+        Fonte("Associação dos Amigos do Caminho da Fé", "Site oficial e manual de normas e procedimentos (caminhodafe.com.br)"),
+        Fonte("Santuário Nacional de Aparecida (A12)", "Notícia sobre a morte de Almiro José Grings e página Rotas da Devoção"),
+        Fonte("Relatos de peregrinos", "Trechos por Ouro Fino, distâncias e paradas, conforme diários de quem fez o caminho"),
+        Fonte("Prefeitura de Ouro Fino", "Crisólia como distrito do município")
     )
 }

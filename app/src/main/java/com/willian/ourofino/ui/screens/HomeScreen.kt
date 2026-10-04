@@ -39,7 +39,8 @@ import com.willian.ourofino.ui.components.TituloDeSecao
 fun HomeScreen(
     onVerAtracoes: () -> Unit,
     onVerHistoria: () -> Unit,
-    onVerMapa: () -> Unit
+    onVerMapa: () -> Unit,
+    onVerCaminho: () -> Unit
 ) {
     val destaques = OuroFinoDados.pontos.filter { it.destaque }
 
@@ -140,6 +141,38 @@ fun HomeScreen(
                     }
                 }
             }
+            }
+        }
+
+        item {
+            Column {
+                Spacer(modifier = Modifier.height(28.dp))
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .clickable(onClick = onVerCaminho),
+                    shape = RoundedCornerShape(20.dp),
+                    color = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
+                ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = "CAMINHO DA FÉ",
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = "Ouro Fino está na rota até Aparecida",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = "Conheça a história da peregrinação, as etapas e o que o peregrino encontra por aqui.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
             }
         }
 

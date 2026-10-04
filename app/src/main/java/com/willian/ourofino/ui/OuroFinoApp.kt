@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.willian.ourofino.R
 import com.willian.ourofino.ui.screens.AboutScreen
 import com.willian.ourofino.ui.screens.AttractionsScreen
+import com.willian.ourofino.ui.screens.CaminhoScreen
 import com.willian.ourofino.ui.screens.HistoryScreen
 import com.willian.ourofino.ui.screens.HomeScreen
 import com.willian.ourofino.ui.screens.MapScreen
@@ -33,11 +34,12 @@ sealed class Rota(val rota: String, val rotulo: String, val icone: Int) {
     object Inicio : Rota("inicio", "Início", R.drawable.ic_home)
     object Historia : Rota("historia", "História", R.drawable.ic_history)
     object Atracoes : Rota("atracoes", "Atrações", R.drawable.ic_location)
+    object Caminho : Rota("caminho", "Caminho", R.drawable.ic_caminho)
     object Mapa : Rota("mapa", "Mapa", R.drawable.ic_map)
     object Sobre : Rota("sobre", "Sobre", R.drawable.ic_info)
 }
 
-private val abas = listOf(Rota.Inicio, Rota.Historia, Rota.Atracoes, Rota.Mapa, Rota.Sobre)
+private val abas = listOf(Rota.Inicio, Rota.Historia, Rota.Atracoes, Rota.Caminho, Rota.Mapa, Rota.Sobre)
 
 private fun NavHostController.irPara(rota: Rota) {
     navigate(rota.rota) {
@@ -79,7 +81,8 @@ fun OuroFinoApp() {
                 HomeScreen(
                     onVerAtracoes = { navController.irPara(Rota.Atracoes) },
                     onVerHistoria = { navController.irPara(Rota.Historia) },
-                    onVerMapa = { navController.irPara(Rota.Mapa) }
+                    onVerMapa = { navController.irPara(Rota.Mapa) },
+                    onVerCaminho = { navController.irPara(Rota.Caminho) }
                 )
             }
             composable(Rota.Historia.rota) { HistoryScreen() }
@@ -87,6 +90,14 @@ fun OuroFinoApp() {
                 AttractionsScreen(
                     onVerNoMapa = { id ->
                         focoMapa = id
+                        navController.irPara(Rota.Mapa)
+                    }
+                )
+            }
+            composable(Rota.Caminho.rota) {
+                CaminhoScreen(
+                    onVerMenino = {
+                        focoMapa = "menino-porteira"
                         navController.irPara(Rota.Mapa)
                     }
                 )

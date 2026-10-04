@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.willian.ourofino.data.CaminhoDaFe
 import com.willian.ourofino.data.Foto
 import com.willian.ourofino.data.OuroFinoDados
 import com.willian.ourofino.ui.components.HeroHeader
@@ -130,6 +131,22 @@ fun AboutScreen() {
                 ) {
                     CreditoFoto("Monumento Menino da Porteira", OuroFinoDados.fotoMenino)
                     CreditoFoto("Vista de Ouro Fino (tela História)", OuroFinoDados.fotoCidade)
+                    CaminhoDaFe.fotos.forEach { f ->
+                        Column {
+                            Text(
+                                text = f.legenda,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = "Wikimedia Commons · autor e licença na página original",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.primary,
+                                textDecoration = TextDecoration.Underline,
+                                modifier = Modifier.clickable { context.abrirLink(f.paginaOrigem) }
+                            )
+                        }
+                    }
                     Text(
                         text = "Demais fotos, quando houver: acervo de " + OuroFinoDados.CREDITO_FOTOS_PROPRIAS + ".",
                         style = MaterialTheme.typography.bodyMedium,
