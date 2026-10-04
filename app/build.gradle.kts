@@ -11,12 +11,21 @@ android {
         applicationId = "com.willian.ourofino"
         minSdk = 35
         targetSdk = 35
-        versionCode = 2
-        versionName = "2.0.0"
+        versionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt() + 10
+        versionName = "2.0.${System.getenv("GITHUB_RUN_NUMBER") ?: "0"}"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
         }
     }
 
