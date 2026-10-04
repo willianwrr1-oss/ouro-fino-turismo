@@ -1,181 +1,194 @@
 package com.willian.ourofino.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.willian.ourofino.R
+import com.willian.ourofino.data.Foto
+import com.willian.ourofino.data.OuroFinoDados
+import com.willian.ourofino.ui.components.HeroHeader
+import com.willian.ourofino.ui.components.TextoOuroClaro
+import com.willian.ourofino.ui.components.TituloDeSecao
+import com.willian.ourofino.ui.components.abrirEmail
+import com.willian.ourofino.ui.components.abrirLink
 
 @Composable
 fun AboutScreen() {
-    val scrollState = rememberScrollState()
+    val context = LocalContext.current
+    val versao = remember {
+        try {
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: ""
+        } catch (e: Exception) {
+            ""
+        }
+    }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 28.dp)
     ) {
-        // App header
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(24.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        item {
+            HeroHeader(alturaMinima = 220.dp) {
+                TextoOuroClaro("SOBRE O APLICATIVO")
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "🏛️",
-                    fontSize = 48.sp
+                    text = "Ouro Fino Turismo",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color.White
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = stringResource(R.string.app_name),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    text = if (versao.isNotEmpty()) "Versão $versao" else "Guia de história e turismo",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.9f)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        item {
+            Column {
+                Spacer(modifier = Modifier.height(24.dp))
+                TituloDeSecao("Desenvolvimento")
+                Spacer(modifier = Modifier.height(12.dp))
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    shape = RoundedCornerShape(18.dp),
+                    color = MaterialTheme.colorScheme.surface,
+                    shadowElevation = 3.dp
+                ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = "Desenvolvido por Willian R Rocha",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row {
+                            Text(
+                                text = "Contato: ",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Text(
+                                text = OuroFinoDados.EMAIL_CONTATO,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.primary,
+                                textDecoration = TextDecoration.Underline,
+                                modifier = Modifier.clickable {
+                                    context.abrirEmail(OuroFinoDados.EMAIL_CONTATO, "Aplicativo Ouro Fino Turismo")
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
 
-        // Description
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.about_title),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
+        item {
+            Column {
+                Spacer(modifier = Modifier.height(28.dp))
+                TituloDeSecao("Sobre o conteúdo")
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = stringResource(R.string.about_description),
-                    fontSize = 13.sp,
+                    text = "O texto da história foi escrito com base em fontes oficiais (IBGE, Prefeitura de Ouro Fino e Senado Federal). " +
+                        "As coordenadas vêm de dados públicos de mapas e podem variar alguns metros; para navegar, use o botão Como chegar.",
+                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = 18.sp,
-                    textAlign = TextAlign.Justify
+                    modifier = Modifier.padding(horizontal = 20.dp)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        item {
+            Column {
+                Spacer(modifier = Modifier.height(28.dp))
+                TituloDeSecao("Créditos das fotos")
+                Spacer(modifier = Modifier.height(12.dp))
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    CreditoFoto("Monumento Menino da Porteira", OuroFinoDados.fotoMenino)
+                    CreditoFoto("Vista de Ouro Fino (tela História)", OuroFinoDados.fotoCidade)
+                }
+            }
+        }
 
-        // App Info
-        InfoSection(
-            title = stringResource(R.string.about_version),
-            content = "1.0.0"
-        )
-
-        InfoSection(
-            title = stringResource(R.string.about_developer),
-            content = "Prefeitura de Ouro Fino - MG"
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Features
-        Text(
-            text = "✨ Recursos",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Start)
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        FeatureItem("📍 Localização dos pontos turísticos com coordenadas GPS")
-        FeatureItem("🗺️ Integração com Google Maps")
-        FeatureItem("🌙 Modo noturno automático")
-        FeatureItem("🌐 Suporte a português e inglês")
-        FeatureItem("📚 Histórico completo da cidade")
-        FeatureItem("📸 Galeria de imagens de atrações")
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Footer
-        Divider()
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Desenvolvido com ❤️ para Ouro Fino",
-            fontSize = 12.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-    }
-}
-
-@Composable
-fun InfoSection(title: String, content: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = title,
-                fontSize = 13.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-                text = content,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            )
+        item {
+            Column {
+                Spacer(modifier = Modifier.height(28.dp))
+                TituloDeSecao("Mapa e bibliotecas")
+                Spacer(modifier = Modifier.height(12.dp))
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(
+                        text = "Mapa: © OpenStreetMap contributors, exibido com osmdroid.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.clickable { context.abrirLink("https://www.openstreetmap.org/copyright") }
+                    )
+                    Text(
+                        text = "Imagens: Coil. Interface: Jetpack Compose e Material 3.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-fun FeatureItem(text: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+private fun CreditoFoto(titulo: String, foto: Foto) {
+    val context = LocalContext.current
+    Column {
         Text(
-            text = text,
-            fontSize = 12.sp,
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.weight(1f)
+            text = titulo,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface
         )
+        Text(
+            text = foto.autor,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Text(
+                text = "Licença " + foto.licenca,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { context.abrirLink(foto.licencaUrl) }
+            )
+            Text(
+                text = "Página original",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { context.abrirLink(foto.paginaOrigem) }
+            )
+        }
     }
 }

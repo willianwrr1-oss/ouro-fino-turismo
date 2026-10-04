@@ -1,17 +1,23 @@
 package com.willian.ourofino.ui
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -21,88 +27,72 @@ import com.willian.ourofino.ui.screens.AboutScreen
 import com.willian.ourofino.ui.screens.AttractionsScreen
 import com.willian.ourofino.ui.screens.HistoryScreen
 import com.willian.ourofino.ui.screens.HomeScreen
+import com.willian.ourofino.ui.screens.MapScreen
 
-sealed class Screen(val route: String, val label: Int, val icon: Int) {
-    object Home : Screen("home", R.string.nav_home, R.drawable.ic_home)
-    object History : Screen("history", R.string.nav_history, R.drawable.ic_history)
-    object Attractions : Screen("attractions", R.string.nav_attractions, R.drawable.ic_location)
-    object Map : Screen("map", R.string.nav_map, R.drawable.ic_map)
-    object About : Screen("about", R.string.nav_about, R.drawable.ic_info)
+sealed class Rota(val rota: String, val rotulo: String, val icone: Int) {
+    object Inicio : Rota("inicio", "Início", R.drawable.ic_home)
+    object Historia : Rota("historia", "História", R.drawable.ic_history)
+    object Atracoes : Rota("atracoes", "Atrações", R.drawable.ic_location)
+    object Mapa : Rota("mapa", "Mapa", R.drawable.ic_map)
+    object Sobre : Rota("sobre", "Sobre", R.drawable.ic_info)
 }
 
-val items = listOf(
-    Screen.Home,
-    Screen.History,
-    Screen.Attractions,
-    Screen.Map,
-    Screen.About
-)
+private val abas = listOf(Rota.Inicio, Rota.Historia, Rota.Atracoes, Rota.Mapa, Rota.Sobre)
+
+private fun NavHostController.irPara(rota: Rota) {
+    navigate(rota.rota) {
+        popUpTo(graph.findStartDestination().id) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
+    }
+}
 
 @Composable
 fun OuroFinoApp() {
     val navController = rememberNavController()
-    val darkTheme = isSystemInDarkTheme()
+    var focoMapa by remember { mutableStateOf<String?>(null) }
+    val entradaAtual by navController.currentBackStackEntryAsState()
+    val destinoAtual = entradaAtual?.destination
 
-    MaterialTheme(
-        colorScheme = if (darkTheme) OuroDarkColors else OuroLightColors
-    ) {
-        Surface {
-            Scaffold(
-                bottomBar = {
-                    NavigationBar {
-                        val navBackStackEntry by navController.currentBackStackEntryAsState()
-                        val currentDestination = navBackStackEntry?.destination
-
-                        items.forEach { screen ->
-                            NavigationBarItem(
-                                icon = { Icon(painterResource(id = screen.icon), contentDescription = null) },
-                                label = { Text(stringResource(screen.label)) },
-                                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                                onClick = {
-                                    navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                            )
-                        }
-                    }
-                }
-            ) { innerPadding ->
-                NavHost(
-                    navController,
-                    startDestination = Screen.Home.route,
-                    modifier = Modifier.padding(innerPadding)
-                ) {
-                    composable(Screen.Home.route) { HomeScreen(navController) }
-                    composable(Screen.History.route) { HistoryScreen() }
-                    composable(Screen.Attractions.route) { AttractionsScreen(navController) }
-                    composable(Screen.Map.route) { MapScreen() }
-                    composable(Screen.About.route) { AboutScreen() }
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        bottomBar = {
+            NavigationBar {
+                abas.forEach { aba ->
+                    NavigationBarItem(
+                        icon = { Icon(painterResource(id = aba.icone), contentDescription = aba.rotulo) },
+                        label = { Text(aba.rotulo) },
+                        selected = destinoAtual?.hierarchy?.any { it.route == aba.rota } == true,
+                        onClick = { navController.irPara(aba) }
+                    )
                 }
             }
         }
-    }
-}
-
-private val OuroLightColors = lightColorScheme(
-    primary = Color(0xFFFFD700),
-    secondary = Color(0xFFB8860B),
-    tertiary = Color(0xFF2E7D32)
-)
-
-private val OuroDarkColors = darkColorScheme(
-    primary = Color(0xFFFFD700),
-    secondary = Color(0xFFB8860B),
-    tertiary = Color(0xFF4CAF50)
-)
-
-@Composable
-fun MapScreen() {
-    Box(modifier = Modifier.fillMaxWidth()) {
-        Text("Mapa em desenvolvimento")
+    ) { interno ->
+        NavHost(
+            navController = navController,
+            startDestination = Rota.Inicio.rota,
+            modifier = Modifier.padding(interno)
+        ) {
+            composable(Rota.Inicio.rota) {
+                HomeScreen(
+                    onVerAtracoes = { navController.irPara(Rota.Atracoes) },
+                    onVerHistoria = { navController.irPara(Rota.Historia) },
+                    onVerMapa = { navController.irPara(Rota.Mapa) }
+                )
+            }
+            composable(Rota.Historia.rota) { HistoryScreen() }
+            composable(Rota.Atracoes.rota) {
+                AttractionsScreen(
+                    onVerNoMapa = { id ->
+                        focoMapa = id
+                        navController.irPara(Rota.Mapa)
+                    }
+                )
+            }
+            composable(Rota.Mapa.rota) { MapScreen(focoId = focoMapa) }
+            composable(Rota.Sobre.rota) { AboutScreen() }
+        }
     }
 }

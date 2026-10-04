@@ -11,8 +11,8 @@ android {
         applicationId = "com.willian.ourofino"
         minSdk = 35
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,23 +62,18 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3:1.1.2")
     implementation("androidx.compose.foundation:foundation:1.5.4")
+    implementation("androidx.compose.material:material-icons-core")
 
-    // Navigation
+    // Navegação
     implementation("androidx.navigation:navigation-compose:2.7.5")
 
-    // Coil for image loading
+    // Imagens (Coil + OkHttp para enviar o User-Agent exigido pelo Wikimedia)
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
-    // Google Maps
-    implementation("com.google.maps.android:maps-compose:4.3.1")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    // Mapa OpenStreetMap (não exige chave de API)
+    implementation("org.osmdroid:osmdroid-android:6.1.20")
 
-    // Testing
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

@@ -1,124 +1,171 @@
 package com.willian.ourofino.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.willian.ourofino.R
-import com.willian.ourofino.data.repository.LocalDataRepository
+import com.willian.ourofino.data.Evento
+import com.willian.ourofino.data.OuroFinoDados
+import com.willian.ourofino.ui.components.HeroHeader
+import com.willian.ourofino.ui.components.TextoOuroClaro
+import com.willian.ourofino.ui.components.TituloDeSecao
 
 @Composable
 fun HistoryScreen() {
-    val scrollState = rememberScrollState()
-    val historia = LocalDataRepository.getHistoriaCompleta()
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp)
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 28.dp)
     ) {
-        // Title
-        Text(
-            text = stringResource(R.string.history_title),
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+        item {
+            Column {
+            HeroHeader(foto = OuroFinoDados.fotoCidade, alturaMinima = 260.dp) {
+                TextoOuroClaro("1746 · 1749 · 1880 · HOJE")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Nossa história",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Do garimpo no Vale do Sapucaí à cidade histórica de hoje.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.9f)
+                )
+            }
+            }
+        }
 
-        // Timeline sections
-        HistorySectionCard(
-            title = historia.descoberta.titulo,
-            content = historia.descoberta.conteudo,
-            icon = "🔍",
-            color = MaterialTheme.colorScheme.primary
-        )
+        item {
+            Column {
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "O nome da cidade vem do metal que os mineradores encontravam nas bateias: ouro fino. " +
+                    "A linha do tempo abaixo reúne os principais marcos, conforme o IBGE e a Prefeitura.",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+            }
+        }
 
-        HistorySectionCard(
-            title = historia.fundacao.titulo,
-            content = historia.fundacao.conteudo,
-            icon = "🏘️",
-            color = MaterialTheme.colorScheme.secondary
-        )
+        OuroFinoDados.periodos.forEach { periodo ->
+            item {
+                Column {
+                Spacer(modifier = Modifier.height(28.dp))
+                TituloDeSecao(periodo.titulo)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = periodo.intervalo,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 20.dp)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    periodo.eventos.forEach { evento -> CartaoEvento(evento) }
+                }
+                }
+            }
+        }
 
-        HistorySectionCard(
-            title = historia.cicloOuro.titulo,
-            content = historia.cicloOuro.conteudo,
-            icon = "✨",
-            color = MaterialTheme.colorScheme.primary
-        )
+        item {
+            Column {
+            Spacer(modifier = Modifier.height(28.dp))
+            TituloDeSecao("Símbolos da cidade")
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = OuroFinoDados.simbolos,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+            }
+        }
 
-        HistorySectionCard(
-            title = historia.transformacao.titulo,
-            content = historia.transformacao.conteudo,
-            icon = "🌟",
-            color = MaterialTheme.colorScheme.tertiary
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
+        item {
+            Column {
+            Spacer(modifier = Modifier.height(28.dp))
+            TituloDeSecao("Fontes")
+            Spacer(modifier = Modifier.height(12.dp))
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                OuroFinoDados.fontes.forEach { fonte ->
+                    Column {
+                        Text(
+                            text = fonte.titulo,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Text(
+                            text = fonte.detalhe,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
+            }
+        }
     }
 }
 
 @Composable
-fun HistorySectionCard(
-    title: String,
-    content: String,
-    icon: String,
-    color: androidx.compose.ui.graphics.Color
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-        shape = RoundedCornerShape(12.dp)
+private fun CartaoEvento(evento: Evento) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 2.dp
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 12.dp)
-            ) {
-                Text(
-                    text = icon,
-                    fontSize = 28.sp,
-                    modifier = Modifier.padding(end = 12.dp)
-                )
-                Text(
-                    text = title,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = color
-                )
-            }
-
+        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = color.copy(alpha = 0.1f),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(12.dp)
-            ) {
+                    .width(5.dp)
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.primary)
+            )
+            Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = content,
-                    fontSize = 13.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = 18.sp
+                    text = evento.data.uppercase(),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = evento.titulo,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = evento.texto,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

@@ -1,163 +1,207 @@
 package com.willian.ourofino.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import coil.compose.AsyncImage
-import com.willian.ourofino.R
-import com.willian.ourofino.data.model.Categoria
-import com.willian.ourofino.data.repository.LocalDataRepository
+import com.willian.ourofino.data.Categoria
+import com.willian.ourofino.data.OuroFinoDados
+import com.willian.ourofino.data.PontoTuristico
+import com.willian.ourofino.ui.components.ChipSimples
+import com.willian.ourofino.ui.components.FotoDoPonto
+import com.willian.ourofino.ui.components.HeroHeader
+import com.willian.ourofino.ui.components.SeloCategoria
+import com.willian.ourofino.ui.components.TextoOuroClaro
+import com.willian.ourofino.ui.components.TituloDeSecao
+import com.willian.ourofino.ui.components.abrirLink
+import com.willian.ourofino.ui.components.urlComoChegar
+import com.willian.ourofino.ui.components.urlFotosNoMapa
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AttractionsScreen(navController: NavController) {
-    var selectedCategory by remember { mutableStateOf(Categoria.CULTURAL) }
-    val pontos = LocalDataRepository.getPontosturisticos()
-    val filteredPontos = pontos.filter { it.category == selectedCategory }
+fun AttractionsScreen(onVerNoMapa: (String) -> Unit) {
+    var filtro by remember { mutableStateOf<Categoria?>(null) }
 
-    Column(
-        modifier = Modifier.fillMaxSize()
+    val destaques = OuroFinoDados.pontos.filter { it.destaque && (filtro == null || it.categoria == filtro) }
+    val outros = OuroFinoDados.pontos.filter { !it.destaque && (filtro == null || it.categoria == filtro) }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 28.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Title and Filter
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.attractions_title),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(12.dp))
+        item {
+            HeroHeader(alturaMinima = 220.dp) {
+                TextoOuroClaro("O QUE VISITAR")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Atrações",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Monumentos, fé e natureza em Ouro Fino.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.9f)
+                )
+            }
+        }
 
-            // Filter buttons
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+        item {
+            LazyRow(
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Categoria.values().forEach { category ->
-                    val label = when (category) {
-                        Categoria.CULTURAL -> stringResource(R.string.attractions_cultural)
-                        Categoria.NATURAL -> stringResource(R.string.attractions_natural)
-                        Categoria.RELIGIOUS -> stringResource(R.string.attractions_religious)
-                    }
-                    FilterChip(
-                        selected = selectedCategory == category,
-                        onClick = { selectedCategory = category },
-                        label = { Text(label, fontSize = 12.sp) }
-                    )
+                item { ChipSimples("Todas", filtro == null) { filtro = null } }
+                items(Categoria.values().toList()) { c ->
+                    ChipSimples(c.rotulo, filtro == c) { filtro = c }
                 }
             }
         }
 
-        // List of attractions
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(bottom = 16.dp)
-        ) {
-            items(filteredPontos) { ponto ->
-                AttractionCard(ponto)
+        items(destaques) { ponto ->
+            CartaoAtracao(ponto = ponto, onVerNoMapa = onVerNoMapa)
+        }
+
+        if (outros.isNotEmpty()) {
+            item {
+                Column {
+                    TituloDeSecao("Outros pontos de interesse")
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Column(
+                        modifier = Modifier.padding(horizontal = 20.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        outros.forEach { ponto -> LinhaCompacta(ponto) }
+                    }
+                }
             }
+        }
+
+        item {
+            Text(
+                text = "As fotos vêm do Wikimedia Commons, com crédito do autor e licença. Onde não há foto livre disponível, " +
+                    "use “Ver fotos no Google Maps”.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
         }
     }
 }
 
 @Composable
-fun AttractionCard(ponto: com.willian.ourofino.data.model.PontoTuristico) {
+private fun CartaoAtracao(ponto: PontoTuristico, onVerNoMapa: (String) -> Unit) {
+    val context = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        shape = RoundedCornerShape(12.dp)
+            .padding(horizontal = 20.dp),
+        shape = RoundedCornerShape(22.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
-        Column {
-            // Image
-            if (ponto.imageUrl.isNotEmpty()) {
-                AsyncImage(
-                    model = ponto.imageUrl,
-                    contentDescription = stringResource(ponto.nameRes),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp),
-                    contentScale = ContentScale.Crop
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp)
-                        .background(MaterialTheme.colorScheme.surfaceVariant),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Sem imagem disponível")
-                }
-            }
-
-            // Content
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
+        FotoDoPonto(ponto = ponto, altura = 200.dp)
+        Column(modifier = Modifier.padding(18.dp)) {
+            SeloCategoria(ponto.categoria)
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = ponto.nome,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = ponto.descricao,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            val endereco = ponto.endereco
+            if (endereco != null) {
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = stringResource(ponto.nameRes),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
+                    text = endereco,
+                    style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(ponto.descriptionRes),
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = 16.sp
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // Coordinates
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "📍 ${ponto.latitude.toStringWithDecimals(4)}, ${ponto.longitude.toStringWithDecimals(4)}",
-                        fontSize = 11.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    IconButton(
-                        onClick = { /* TODO: Open in Maps */ },
-                        modifier = Modifier.size(24.dp)
-                    ) {
-                        Text("🗺️", fontSize = 16.sp)
-                    }
+            }
+            Spacer(modifier = Modifier.height(14.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                if (ponto.temCoordenadas) {
+                    OutlinedButton(
+                        onClick = { onVerNoMapa(ponto.id) },
+                        shape = RoundedCornerShape(12.dp)
+                    ) { Text("Ver no mapa") }
+                }
+                Button(
+                    onClick = { context.abrirLink(urlComoChegar(ponto)) },
+                    shape = RoundedCornerShape(12.dp)
+                ) { Text("Como chegar") }
+            }
+            if (ponto.foto == null) {
+                TextButton(onClick = { context.abrirLink(urlFotosNoMapa(ponto)) }) {
+                    Text("Ver fotos no Google Maps")
                 }
             }
         }
     }
 }
 
-private fun Double.toStringWithDecimals(decimals: Int): String {
-    return "%.${decimals}f".format(this)
+@Composable
+private fun LinhaCompacta(ponto: PontoTuristico) {
+    val context = LocalContext.current
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(14.dp),
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 2.dp
+    ) {
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 6.dp, top = 8.dp, bottom = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = ponto.nome,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = ponto.categoria.rotulo,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+            TextButton(onClick = { context.abrirLink(urlComoChegar(ponto)) }) {
+                Text("Mapa")
+            }
+        }
+    }
 }
