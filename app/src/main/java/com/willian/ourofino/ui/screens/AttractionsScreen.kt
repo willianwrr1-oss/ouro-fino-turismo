@@ -1,5 +1,7 @@
 package com.willian.ourofino.ui.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,6 +23,7 @@ import com.willian.ourofino.R
 import com.willian.ourofino.data.model.Categoria
 import com.willian.ourofino.data.repository.LocalDataRepository
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AttractionsScreen(navController: NavController) {
     var selectedCategory by remember { mutableStateOf(Categoria.CULTURAL) }

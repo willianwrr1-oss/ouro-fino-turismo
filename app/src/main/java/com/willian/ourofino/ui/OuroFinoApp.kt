@@ -1,9 +1,13 @@
 package com.willian.ourofino.ui
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -40,7 +44,7 @@ fun OuroFinoApp() {
     val darkTheme = isSystemInDarkTheme()
 
     MaterialTheme(
-        colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()
+        colorScheme = if (darkTheme) OuroDarkColors else OuroLightColors
     ) {
         Surface {
             Scaffold(
@@ -59,7 +63,8 @@ fun OuroFinoApp() {
                                         popUpTo(navController.graph.findStartDestination().id) {
                                             saveState = true
                                         }
-                                        lazyRestoreState = true
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
                                 }
                             )
@@ -83,18 +88,16 @@ fun OuroFinoApp() {
     }
 }
 
-@Composable
-fun lightColorScheme() = lightColorScheme(
-    primary = androidx.compose.material3.Color(0xFFFFD700),
-    secondary = androidx.compose.material3.Color(0xFFB8860B),
-    tertiary = androidx.compose.material3.Color(0xFF2E7D32)
+private val OuroLightColors = lightColorScheme(
+    primary = Color(0xFFFFD700),
+    secondary = Color(0xFFB8860B),
+    tertiary = Color(0xFF2E7D32)
 )
 
-@Composable
-fun darkColorScheme() = darkColorScheme(
-    primary = androidx.compose.material3.Color(0xFFFFD700),
-    secondary = androidx.compose.material3.Color(0xFFB8860B),
-    tertiary = androidx.compose.material3.Color(0xFF4CAF50)
+private val OuroDarkColors = darkColorScheme(
+    primary = Color(0xFFFFD700),
+    secondary = Color(0xFFB8860B),
+    tertiary = Color(0xFF4CAF50)
 )
 
 @Composable
