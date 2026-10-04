@@ -27,7 +27,8 @@ data class PontoTuristico(
     val longitude: Double?,
     val consultaMapa: String,
     val foto: Foto?,
-    val destaque: Boolean = true
+    val destaque: Boolean = true,
+    val paginaFotos: String? = null
 ) {
     val temCoordenadas: Boolean get() = latitude != null && longitude != null
 }
@@ -46,6 +47,22 @@ object OuroFinoDados {
     const val EMAIL_CONTATO = "willian.wrr1@gmail.com"
     const val CREDITO_FOTOS_PROPRIAS = "Willian R Rocha"
 
+    // Fotos enviadas para o app (res/drawable-nodpi/foto_<id>.jpg), com o crédito da fonte de cada uma.
+    val creditosFotosLocais: Map<String, String> = mapOf(
+        "lagos-palomos" to "Prefeitura de Ouro Fino",
+        "pedra-itaguacu" to "Drone Pieroni",
+        "praca-berrante" to "Caminhos Me Levem",
+        "boiadeiro" to "Diário de um Viajante BR",
+        "santuario" to "autoria a confirmar",
+        "boi-sem-coracao" to "autoria a confirmar"
+    )
+
+    // Ajuste vertical do recorte das fotos nos cartões (-1 = topo, 0 = centro, 1 = base).
+    val enquadramentoFotos: Map<String, Float> = mapOf(
+        "santuario" to -0.6f,
+        "boiadeiro" to -0.2f
+    )
+
     val fotoMenino = Foto(
         url = "https://commons.wikimedia.org/wiki/Special:FilePath/Menino_da_Porteira.JPG?width=1200",
         autor = "Fabricio de Souza Menegildo / Wikimedia Commons",
@@ -62,7 +79,7 @@ object OuroFinoDados {
         paginaOrigem = "https://commons.wikimedia.org/wiki/File:Ouro_Fino_Minas_Gerais.jpg"
     )
 
-    val pontos: List<PontoTuristico> = listOf(
+    private val pontosBase: List<PontoTuristico> = listOf(
         PontoTuristico(
             id = "menino-porteira",
             nome = "Monumento Menino da Porteira",
@@ -197,6 +214,17 @@ object OuroFinoDados {
             destaque = false
         )
     )
+
+    const val PAGINA_PREFEITURA = "https://www.ourofino.mg.gov.br/historia/"
+
+    // A página de história da Prefeitura exibe fotos destes pontos. O app só abre o link; não copia as imagens.
+    private val comFotosNaPrefeitura = setOf(
+        "menino-porteira", "boi-sem-coracao", "santuario", "lagos-palomos", "gruta", "sao-benedito", "sao-judas"
+    )
+
+    val pontos: List<PontoTuristico> = pontosBase.map { p ->
+        if (p.id in comFotosNaPrefeitura) p.copy(paginaFotos = PAGINA_PREFEITURA) else p
+    }
 
     val periodos: List<Periodo> = listOf(
         Periodo(

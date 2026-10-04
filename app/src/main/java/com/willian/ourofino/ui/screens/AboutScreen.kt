@@ -189,11 +189,20 @@ fun AboutScreen(onVoltar: () -> Unit) {
                             )
                         }
                     }
-                    Text(
-                        text = "Demais fotos, quando houver: acervo de " + OuroFinoDados.CREDITO_FOTOS_PROPRIAS + ".",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    OuroFinoDados.pontos.filter { OuroFinoDados.creditosFotosLocais.containsKey(it.id) }.forEach { ponto ->
+                        Column {
+                            Text(
+                                text = ponto.nome,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = "Foto: " + (OuroFinoDados.creditosFotosLocais[ponto.id] ?: ""),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
         }

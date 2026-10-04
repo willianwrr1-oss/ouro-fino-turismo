@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -75,6 +76,9 @@ fun urlComoChegar(p: PontoTuristico): String {
 /** Fotos próprias: arquivos app/src/main/res/drawable-nodpi/foto_<id com underline>.jpg (ex.: foto_santuario.jpg). Retorna 0 se não existir. */
 fun Context.fotoLocalDe(p: PontoTuristico): Int =
     resources.getIdentifier("foto_" + p.id.replace('-', '_'), "drawable", packageName)
+
+fun urlFotosNaInternet(p: PontoTuristico): String =
+    "https://www.google.com/search?tbm=isch&q=" + Uri.encode(p.consultaMapa)
 
 fun urlFotosNoMapa(p: PontoTuristico): String =
     "https://www.google.com/maps/search/?api=1&query=" + Uri.encode(p.consultaMapa)
@@ -213,13 +217,15 @@ fun FotoDoPonto(ponto: PontoTuristico, altura: Dp, modifier: Modifier = Modifier
         val fotoLocal = remember(ponto.id) { context.fotoLocalDe(ponto) }
         val foto = ponto.foto
         if (fotoLocal != 0) {
+            val credito = OuroFinoDados.creditosFotosLocais[ponto.id] ?: OuroFinoDados.CREDITO_FOTOS_PROPRIAS
             AsyncImage(
                 model = fotoLocal,
                 contentDescription = ponto.nome,
                 contentScale = ContentScale.Crop,
+                alignment = BiasAlignment(0f, OuroFinoDados.enquadramentoFotos[ponto.id] ?: 0f),
                 modifier = Modifier.fillMaxSize()
             )
-            LegendaDaFoto("Foto: " + OuroFinoDados.CREDITO_FOTOS_PROPRIAS, Modifier.align(Alignment.BottomStart))
+            LegendaDaFoto("Foto: " + credito, Modifier.align(Alignment.BottomStart))
         } else if (foto != null) {
             AsyncImage(
                 model = foto.url,
